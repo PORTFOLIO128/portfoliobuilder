@@ -57,7 +57,7 @@ export default function HeroSection() {
           <div className="relative">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
               <img 
-                src="https://readdy.ai/api/search-image?query=Professional%20young%20diverse%20students%20and%20job%20seekers%20working%20on%20laptops%20in%20modern%20coworking%20space%2C%20bright%20natural%20lighting%2C%20collaborative%20atmosphere%2C%20technology%20and%20creativity%2C%20inspiring%20workspace%20with%20plants%20and%20modern%20furniture%2C%20success%20and%20achievement%20vibes&width=600&height=800&seq=hero-img-001&orientation=portrait"
+                src="https://i.postimg.cc/90HKHVW3/61687ac02e01422269a9911da9a06a9f.jpg"
                 alt="Students building portfolios"
                 className="w-full h-96 lg:h-[500px] object-cover object-top"
               />
