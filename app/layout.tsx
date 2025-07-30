@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "Portfolio Builders",
     images: [
       {
-        url: "https://portfoliobuilders.vercel.app/og-image.jpg", // replace with your actual image
+        url: "https://portfoliobuilders.vercel.app/og-image.jpg",
         width: 1200,
         height: 630,
         alt: "Portfolio Builders"
@@ -50,10 +50,10 @@ export const metadata: Metadata = {
     type: "website"
   },
   icons: {
-    icon: "/favicon.ico" // make sure favicon.ico is in public folder
+    icon: "/favicon.ico"
   },
   verification: {
-    google: "google5274e2872444bf60" // ✅ Your verification code
+    google: "google5274e2872444bf60"
   }
 };
 
