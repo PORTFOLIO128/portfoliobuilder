@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     icon: "/favicon.ico"
   },
   verification: {
-    google: "google5274e2872444bf60"
+    google: "cjw2nxBnZsNQnoleuMtJ7eZZelzEo8TAgmk4PTVCIHw"
   }
 };
 
@@ -63,10 +63,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div
-      className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`}
-    >
-      {children}
-    </div>
+    <html lang="en">
+      <head />
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} ${pacifico.variable} antialiased`}
+      >
+        {children}
+      </body>
+    </html>
   );
 }
