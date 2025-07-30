@@ -65,7 +65,7 @@ export default function SolutionSection() {
             
             <div className="relative">
               <img 
-                src="https://readdy.ai/api/search-image?query=Professional%20portfolio%20website%20mockup%20displayed%20on%20modern%20laptop%20and%20mobile%20devices%2C%20clean%20modern%20interface%20design%2C%20developer%20portfolio%20showcase%2C%20technology%20projects%20display%2C%20sleek%20UI%2FUX%20design%2C%20professional%20presentation%2C%20high-quality%20digital%20portfolio%20example&width=600&height=400&seq=solution-img-001&orientation=landscape"
+                src="https://i.postimg.cc/ydscMrwQ/1c34161068e7872cae7087d259a5a5a5.jpg"
                 alt="Portfolio example"
                 className="w-full h-80 object-cover object-top rounded-2xl shadow-lg"
               />
