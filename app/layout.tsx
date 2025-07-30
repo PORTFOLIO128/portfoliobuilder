@@ -51,6 +51,9 @@ export const metadata: Metadata = {
   },
   icons: {
     icon: "/favicon.ico" // make sure favicon.ico is in public folder
+  },
+  verification: {
+    google: "google5274e2872444bf60" // ✅ Your verification code
   }
 };
 
