@@ -21,7 +21,7 @@ export default function ApplyForm() {
 
     try {
       // For local development - use your local backend
-      const response = await fetch('https://portfoliobackend-ezrj.onrender.com/submit-form', {
+      const response = await fetch('https://portfoliobackend-nh3xjva6d-bhuvaneshs-projects-37345e6a.vercel.app/submit-form', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
