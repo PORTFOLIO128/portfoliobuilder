@@ -1,6 +1,6 @@
-'use client';
+"use client";
+import React, { useState } from "react";
 
-import { useState } from 'react';
 
 export default function ApplyForm() {
   const [formData, setFormData] = useState({
@@ -20,8 +20,9 @@ export default function ApplyForm() {
     }
 
     try {
-      // For local development - use your local backend
-      const response = await fetch('https://portfoliobackend-nh3xjva6d-bhuvaneshs-projects-37345e6a.vercel.app/submit-form', {
+      // Use environment variable for backend API URL (Next.js exposes NEXT_PUBLIC_ vars)
+      const apiUrl = (process.env.NEXT_PUBLIC_API_URL || "https://portfoliobuilder-backend.vercel.app").replace(/\/$/, "");
+      const response = await fetch(${apiUrl}/submit-form, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -33,7 +34,7 @@ export default function ApplyForm() {
         setIsSubmitted(true);
       } else {
         const errorData = await response.json();
-        alert(`Failed to submit: ${errorData.error || 'Please try again.'}`);
+        alert(Failed to submit: ${errorData.error || 'Please try again.'});
       }
     } catch (error) {
       console.error('Submission error:', error);
@@ -42,7 +43,7 @@ export default function ApplyForm() {
   };
 
   const handleInputChange = (field: string, value: string) => {
-    setFormData(prev => ({ ...prev, [field]: value }));
+    setFormData((prev: typeof formData) => ({ ...prev, [field]: value }));
   };
 
   return (
