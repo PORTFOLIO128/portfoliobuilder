@@ -21,7 +21,7 @@ export default function ApplyForm() {
 
     try {
       // For local development - use your local backend
-      const response = await fetch('http://localhost:5000/submit-form', {
+      const response = await fetch('https://portfoliobackend-ezrj.onrender.com', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
