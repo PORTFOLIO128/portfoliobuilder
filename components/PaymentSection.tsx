@@ -95,7 +95,7 @@ export default function PaymentSection() {
                 
                 <div className="bg-white rounded-2xl p-8 shadow-lg inline-block mb-6">
                   <img 
-                    src="https://i.postimg.cc/gjzVJ8H9/Screenshot-20250730-160507.jpg"
+                    src="https://i.postimg.cc/ZR9gdKjR/Screenshot-20250801-110719.jpg"
                     alt="UPI Payment QR Code"
                     className="w-48 h-48 object-cover mx-auto"
                   />
