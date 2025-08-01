@@ -2,7 +2,6 @@
 "use client";
 import React, { useState } from "react";
 
-
 export default function ApplyForm() {
   const [formData, setFormData] = useState({
     name: '',
@@ -11,14 +10,45 @@ export default function ApplyForm() {
     career: ''
   });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState('');
+
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePhone = (phone: string) => {
+    const phoneRegex = /^[\+]?[1-9][\d]{0,15}$/;
+    return phoneRegex.test(phone.replace(/\s/g, ''));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
 
-    if (!formData.name || !formData.email || !formData.number || !formData.career) {
-      alert('Please fill in all required fields');
+    // Enhanced validation
+    if (!formData.name.trim()) {
+      setError('Please enter your name');
       return;
     }
+
+    if (!validateEmail(formData.email)) {
+      setError('Please enter a valid email address');
+      return;
+    }
+
+    if (!validatePhone(formData.number)) {
+      setError('Please enter a valid phone number');
+      return;
+    }
+
+    if (!formData.career) {
+      setError('Please select your career path');
+      return;
+    }
+
+    setIsSubmitting(true);
 
     try {
       // Use environment variable for backend API URL (Next.js exposes NEXT_PUBLIC_ vars)
@@ -33,18 +63,23 @@ export default function ApplyForm() {
 
       if (response.ok) {
         setIsSubmitted(true);
+        setFormData({ name: '', email: '', number: '', career: '' }); // Reset form
       } else {
         const errorData = await response.json();
-        alert(`Failed to submit: ${errorData.error || 'Please try again.'}`);
+        setError(errorData.error || 'Failed to submit. Please try again.');
       }
     } catch (error) {
       console.error('Submission error:', error);
-      alert('Something went wrong. Please try again later.');
+      setError('Network error. Please check your connection and try again.');
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev: typeof formData) => ({ ...prev, [field]: value }));
+    // Clear error when user starts typing
+    if (error) setError('');
   };
 
   return (
@@ -58,6 +93,12 @@ export default function ApplyForm() {
           <p className="text-gray-600">Fill in your details and we'll get back to you soon</p>
         </div>
 
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <p className="text-red-700 text-sm">{error}</p>
+          </div>
+        )}
+
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name */}
           <div>
@@ -67,9 +108,10 @@ export default function ApplyForm() {
               name="name"
               value={formData.name}
               onChange={(e) => handleInputChange('name', e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg"
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="Your full name"
               required
+              disabled={isSubmitting || isSubmitted}
             />
           </div>
 
@@ -81,9 +123,10 @@ export default function ApplyForm() {
               name="email"
               value={formData.email}
               onChange={(e) => handleInputChange('email', e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg"
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="your.email@example.com"
               required
+              disabled={isSubmitting || isSubmitted}
             />
           </div>
 
@@ -95,9 +138,10 @@ export default function ApplyForm() {
               name="number"
               value={formData.number}
               onChange={(e) => handleInputChange('number', e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg"
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               placeholder="+91 9876543210"
               required
+              disabled={isSubmitting || isSubmitted}
             />
           </div>
 
@@ -108,8 +152,9 @@ export default function ApplyForm() {
               name="career"
               value={formData.career}
               onChange={(e) => handleInputChange('career', e.target.value)}
-              className="w-full px-4 py-3 border rounded-lg"
+              className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
               required
+              disabled={isSubmitting || isSubmitted}
             >
               <option value="">Select your career path *</option>
               <option>Software Developer</option>
@@ -128,10 +173,29 @@ export default function ApplyForm() {
           {/* Submit */}
           <button
             type="submit"
-            className="w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white py-4 rounded-lg font-semibold text-lg"
+            disabled={isSubmitting || isSubmitted}
+            className={`w-full py-4 rounded-lg font-semibold text-lg transition-all duration-300 ${
+              isSubmitting || isSubmitted
+                ? 'bg-gray-400 cursor-not-allowed'
+                : 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700'
+            } text-white`}
           >
-            <i className="ri-send-plane-line mr-2"></i>
-            Submit Application
+            {isSubmitting ? (
+              <>
+                <i className="ri-loader-4-line animate-spin mr-2"></i>
+                Submitting...
+              </>
+            ) : isSubmitted ? (
+              <>
+                <i className="ri-check-line mr-2"></i>
+                Submitted Successfully
+              </>
+            ) : (
+              <>
+                <i className="ri-send-plane-line mr-2"></i>
+                Submit Application
+              </>
+            )}
           </button>
         </form>
 
@@ -147,11 +211,11 @@ export default function ApplyForm() {
             <div className="space-y-3">
               <div className="flex items-center justify-center space-x-2">
                 <i className="ri-phone-line text-blue-600"></i>
-                <a href="tel:+919342344427" className="font-bold text-blue-600">+91-9342344427</a>
+                <a href="tel:+919342344427" className="font-bold text-blue-600 hover:text-blue-700">+91-9342344427</a>
               </div>
               <div className="flex items-center justify-center space-x-2">
                 <i className="ri-mail-line text-blue-600"></i>
-                <a href="mailto:portfoliobuilderservice@gmail.com" className="font-bold text-blue-600">portfoliobuilderservice@gmail.com</a>
+                <a href="mailto:portfoliobuilderservice@gmail.com" className="font-bold text-blue-600 hover:text-blue-700">portfoliobuilderservice@gmail.com</a>
               </div>
             </div>
           </div>
